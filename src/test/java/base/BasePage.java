@@ -48,12 +48,12 @@ public class BasePage {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);" , element);
         }
 
-       /* @AfterClass
+        @AfterClass
         public void tearDown() {
         driver.manage().deleteAllCookies();
         driver.close();
         driver.quit();
-        }*/
+        }
 
 
 }

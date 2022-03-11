@@ -11,9 +11,18 @@ public class TestPage extends BasePage {
         driver.navigate().to(homeURL);
     }
 
+    @Test(priority = 10)
+    public void verifyThatAfterSuccessfullyLoggedInUserIsBeingRedirectedToChooseProfilePage() {
+        String validUsername = excelReader.getStringData("Usernames and Passwords",
+                0, 1);
+        String validPassword = excelReader.getStringData("Usernames and Passwords",
+                1, 1);
+        loginPage.inputUsername(validUsername);
+        loginPage.inputPassword(validPassword);
+        loginPage.clickOnLoginButton();
 
-        @Test
-        public void test1 (){
 
-        }
+
     }
+
+}
