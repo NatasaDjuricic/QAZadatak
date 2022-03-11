@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import pages.ChooseProfilePage;
 import pages.LoginPage;
 
 import java.io.IOException;
@@ -19,8 +20,9 @@ public class BasePage {
     public WebDriver driver; //deklarisem driver
     public WebDriverWait wdwait; //deklarisem waiter
     public ExcelReader excelReader; //deklarisem ExcelReader
-    public LoginPage loginPage;
-    public String homeURL;
+    public LoginPage loginPage; //napravila sam LoginPage i dodajem je ovde kako bi povukla ovde napravljena setovanja
+    public String homeURL; //deklarisem URL pocetne stranice
+    public ChooseProfilePage chooseProfilePage; //dodajem pocetnu stranicu za testiranje
 
     //U ovoj klasi pravim @BeforClass koji ce se pokrenuti pre TestPage-a
     // inicijalizujem drivere, waiter, excelReader, stranice i URL-ove
@@ -33,6 +35,7 @@ public class BasePage {
         excelReader = new ExcelReader("TextBook.xlsx"); // odavde vucem unose u program
         loginPage = new LoginPage(driver);
         homeURL = excelReader.getStringData("URL",0,1);
+        chooseProfilePage = new ChooseProfilePage(driver);
     }
         public void waiterVisibility(WebElement element) {
         wdwait.until(ExpectedConditions.visibilityOf(element));
@@ -48,12 +51,12 @@ public class BasePage {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);" , element);
         }
 
-        @AfterClass
+        /*@AfterClass
         public void tearDown() {
         driver.manage().deleteAllCookies();
         driver.close();
         driver.quit();
-        }
+        }*/
 
 
 }

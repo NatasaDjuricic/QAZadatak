@@ -1,6 +1,7 @@
 package tests;
 
 import base.BasePage;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -20,9 +21,18 @@ public class TestPage extends BasePage {
         loginPage.inputUsername(validUsername);
         loginPage.inputPassword(validPassword);
         loginPage.clickOnLoginButton();
-
-
-
+        waiterClickability(chooseProfilePage.chooseProfileButton);
+        String chooseProfilePageURL = excelReader.getStringData("URL", 1, 1);
+        String actualURL = driver.getCurrentUrl();
+        Assert.assertEquals(chooseProfilePageURL, actualURL);
     }
 
-}
+    @Test (priority = 20)
+    public void verifyThatAfterClickingOnChooseProfileButtonUserIsRedirectedToCreateProfilePage(){
+
+
+
+        }
+    }
+
+
