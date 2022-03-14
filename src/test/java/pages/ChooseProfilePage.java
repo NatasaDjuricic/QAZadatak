@@ -13,11 +13,11 @@ public class ChooseProfilePage extends BasePage {
     }
 
     public @FindBy (css = ".button.button--primary")
-    WebElement chooseProfileButton;
+    WebElement createNewProfileButton;
 
     //---------------------------------------------------
 
-    public void clickOnChooseProfileButton() {
-        chooseProfileButton.click();
+    public void clickOnCreateNewProfileButton() {
+        createNewProfileButton.click();
     }
 }
