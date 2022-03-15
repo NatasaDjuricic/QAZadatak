@@ -25,8 +25,7 @@ public class TestPage extends BasePage {
         waiterClickability(chooseProfilePage.createNewProfileButton);
         String expectedURL = chooseProfilePageURL;
         String actualURL = driver.getCurrentUrl();
-        System.out.println(actualURL);
-        //Assert.assertEquals(expectedURL, actualURL);
+        Assert.assertEquals(expectedURL, actualURL);
 
     }
 
@@ -35,7 +34,7 @@ public class TestPage extends BasePage {
         chooseProfilePage.clickOnCreateNewProfileButton();
         String expectedURL = createProfilePageURL;
         String actualURL = driver.getCurrentUrl();
-       // Assert.assertEquals(expectedURL, actualURL);
+        Assert.assertEquals(expectedURL, actualURL);
 
     }
 
@@ -49,11 +48,15 @@ public class TestPage extends BasePage {
       createProfilePage.inputBirthYear(validBirthYear);
       waiterVisibility(createProfilePage.avatar);
       createProfilePage.clickOnAvatar();
-     Thread.sleep(5000);
-     scroll(createProfilePage.avatar1);
+     scroll(createProfilePage.createProfileButton);
      createProfilePage.clickOnCreateProfileButton();
+     Thread.sleep(2000);
+     String expectedURL = deleteProfilePageURL;
+     String actualURL = driver.getCurrentUrl();
+     Assert.assertEquals(expectedURL, actualURL);
 
     }
+
 
 
 }

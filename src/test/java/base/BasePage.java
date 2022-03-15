@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import pages.ChooseProfilePage;
 import pages.CreateProfilePage;
+import pages.DeleteProfilePage;
 import pages.LoginPage;
 
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class BasePage {
     public String chooseProfilePageURL;
     public CreateProfilePage createProfilePage;
     public String createProfilePageURL;
+    public DeleteProfilePage deleteProfilePage;
+    public String deleteProfilePageURL;
 
 
     //U ovoj klasi pravim @BeforClass koji ce se pokrenuti pre TestPage-a
@@ -41,8 +44,12 @@ public class BasePage {
         loginPage = new LoginPage(driver);
         homeURL = excelReader.getStringData("URL",0,1);
         chooseProfilePage = new ChooseProfilePage(driver);
+        chooseProfilePageURL = excelReader.getStringData("URL", 1, 1);
         createProfilePage = new CreateProfilePage(driver);
-        createProfilePageURL = excelReader.getStringData("URL", 1, 1);
+        createProfilePageURL = excelReader.getStringData("URL", 2, 1);
+        deleteProfilePage = new DeleteProfilePage(driver);
+        deleteProfilePageURL = excelReader.getStringData("URL", 3, 1);
+
 
 
     }
@@ -56,6 +63,8 @@ public class BasePage {
         wdwait.until(ExpectedConditions.elementToBeClickable(element));
 
         }
+
+
 
         public void scroll(WebElement element) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);" , element);
