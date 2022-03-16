@@ -11,7 +11,10 @@ public class DeleteProfilePage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public @FindBy (className = "card__avatar-outer")
+    public @FindBy (xpath = "/html/body/div/div/div/div/div/div[2]/h2")
+    WebElement deletePageName;
+
+    public @FindBy (xpath = "/html/body/div/div/div/div/div/div[2]/div/div/img")
     WebElement deletePageAvatar;
 
     public @FindBy (css = "card__delete button.button--delete.button--small")

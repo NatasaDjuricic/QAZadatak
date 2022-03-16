@@ -1,6 +1,7 @@
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -63,6 +64,12 @@ public class BasePage {
         wdwait.until(ExpectedConditions.elementToBeClickable(element));
 
         }
+
+        public void waiterPresenceOfElement (WebElement element) {
+        wdwait.until(ExpectedConditions.visibilityOfAllElements(element));
+        }
+
+
 
 
 
