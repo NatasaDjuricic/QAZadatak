@@ -5,76 +5,115 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+//Napravila sam jedan Test Suit gde svi testovi moraju proci i to redom kako sam ih definisala
+//kako bih smatrala da je funkcionalnost u skladu sa zahtevima koji su postavljeni
 public class TestPage extends BasePage {
     @BeforeMethod
     public void setUpPage() {
+        //maksimiziram prozor pre svakog testa
         driver.manage().window().maximize();
 
     }
 
+    //ovaj test ce se izvrsiti prvi zbog vrednosti prioriteta koji sam mu dodelila
     @Test(priority = 10)
-    public void verifyThatAfterSuccessfullyLoggedInUserIsBeingRedirectedToChooseProfilePage() throws InterruptedException {
-        driver.navigate().to(homeURL);
+    //Verifikuj da je nakon uspesnog logovanja korisnik preusmeren na stranicu za izbor profila
+    public void verifyThatAfterSuccessfullyLoggedInUserIsBeingRedirectedToChooseProfilePage() {
+        driver.navigate().to(homeURL); //idi na homeURL koji citam iz excela i koji sam definisala u BasePage
         String validUsername = excelReader.getStringData("Usernames and Passwords",
-                0, 1);
+                0, 1); //procitaj validan username iz excel fajla koji sam definisala u BasePage
         String validPassword = excelReader.getStringData("Usernames and Passwords",
-                1, 1);
-        loginPage.inputUsername(validUsername);
-        loginPage.inputPassword(validPassword);
-        loginPage.clickOnLoginButton();
+                1, 1); //procitaj validan password iz excel fajla koji sam definisala u BasePage
+        loginPage.inputUsername(validUsername); //unesi validan username u "Username" polje
+        loginPage.inputPassword(validPassword); //unesi validan password u "Password" polje
+        loginPage.clickOnLoginButton(); //klikni na "LOGIN" dugme
+        //ovaj waiter stavljam da bi drajver sacekao dok "Create Profile" dugme ne bude klikabilno
         waiterClickability(chooseProfilePage.createNewProfileButton);
-        String expectedURL = chooseProfilePageURL;
-        String actualURL = driver.getCurrentUrl();
-        Assert.assertEquals(expectedURL, actualURL);
+        String expectedURL = chooseProfilePageURL; //procitaj iz excel fajla URL stranice na koju treba da budem preusmerena
+        String actualURL = driver.getCurrentUrl(); //procitaj URL stranice na koju sam stvarno preusmerena
+        Assert.assertEquals(expectedURL, actualURL); //uporedi da li su te dve stranice identicne
 
     }
 
- @Test(priority = 20)
-   public void verifyThatAfterClickingOnChooseProfileButtonUserIsRedirectedToCreateProfilePage() {
-        chooseProfilePage.clickOnCreateNewProfileButton();
-        String expectedURL = createProfilePageURL;
-        String actualURL = driver.getCurrentUrl();
-        Assert.assertEquals(expectedURL, actualURL);
+    //Ovaj test ce se izvrsiti drugi po redu
+    @Test(priority = 20)
+    //Verifikuj da je korisnik nakon klika na "Create New Profile" dugme preusmeren
+    //na stranicu gde moze da kreira profil
+    public void verifyThatAfterClickingOnCreateNewProfileButtonUserIsRedirectedToCreateProfilePage() {
+        chooseProfilePage.clickOnCreateNewProfileButton(); // klikni na "Create New Profile" dugme
+        String expectedURL = createProfilePageURL; //smesti u promenljivu tipa String vrednost ocekivani URL iz excel fajla
+        String actualURL = driver.getCurrentUrl(); //procitaj URL stranice na kojoj se stvarno nalazim
+        Assert.assertEquals(expectedURL, actualURL); //uporedi da li su te dva URL identicna
 
     }
 
- @Test (priority = 30)
+    //Ovaj test ce se izvrsiti treci po redu
+    @Test (priority = 30)
+    //Verifikuj da korisnik moze da napravi profil
     public void verifyThatUserCanCreateProfile() throws InterruptedException {
-      String validProfileName = excelReader.getStringData("Profile Names", 1, 0);
-      createProfilePage.inputProfileName(validProfileName);
+      String validProfileName = excelReader.getStringData("Profile Names",
+              1, 0); //procitaj validan profile name iz excel fajla
+      createProfilePage.inputProfileName(validProfileName); // unesi validan profile name u "Name" placeholder
+      //procitaj vrednost koja se nalazi u polju "Profile Name"
       String profileNameValue = createProfilePage.profileName.getAttribute("value");
-      waiterPresenceOfElement(createProfilePage.age);
-     System.out.println(profileNameValue);
-     scroll(createProfilePage.age);
-      createProfilePage.clickOnAge();
-     String ageValue = createProfilePage.age.getText();
-     System.out.println(ageValue);
+      waiterPresenceOfElement(createProfilePage.age); //sacekaj da se ucita element koji smo nazvali "age"
+      scroll(createProfilePage.age); //skroluj do elementa "age"
+      createProfilePage.clickOnAge(); //klikni na element "age"
+      //procitaj tekstualnu vrednost koja se nalazi u elementu "age"
+      String ageValue = createProfilePage.age.getText();
+      //skroluj do elementa "birthYear"
       scroll(createProfilePage.birthYear);
-      String validBirthYear = excelReader.getStringData("Birth Years", 1, 0);
+      String validBirthYear = excelReader.getStringData("Birth Years",
+              1, 0); //procitaj validnu godinu rodjenja iz excel fajla
+      //unesi validnu godinu rodjenja u "Enter your birth year" polje
       createProfilePage.inputBirthYear(validBirthYear);
+      //procitaj vrednost koja se nalazi u polju "Enter your birth year"
       String birthYearValue = createProfilePage.birthYear.getAttribute("value");
-     System.out.println(birthYearValue);
-      Thread.sleep(5000);
-      createProfilePage.clickOnAvatar();
-     String avatarSourceOnCreateProfilePage = createProfilePage.avatar.getAttribute("src");
-     System.out.println(avatarSourceOnCreateProfilePage);
-     scroll(createProfilePage.createProfileButton);
-    createProfilePage.clickOnCreateProfileButton();
-    Thread.sleep(2000);
-    String expectedURL = deleteProfilePageURL;
-     System.out.println("delete page url: " + expectedURL);
-    String actualURL = driver.getCurrentUrl();
-     System.out.println(actualURL);
-    Assert.assertEquals(expectedURL, actualURL);
-    Thread.sleep(2000);
-    String avatarSourceOnDeletePage = deleteProfilePage.deletePageAvatar.getAttribute("src");
-     System.out.println(avatarSourceOnDeletePage);
-    String profileNameValueOnDeletePage = deleteProfilePage.deletePageName.getText();
-     System.out.println(profileNameValueOnDeletePage);
-     Assert.assertEquals(avatarSourceOnCreateProfilePage, avatarSourceOnDeletePage);
-     Assert.assertEquals(profileNameValue, profileNameValueOnDeletePage);
+      Thread.sleep(5000); //Sacekaj 5 sekundi
+      createProfilePage.clickOnAvatar(); //klikni na avatar
+      //procitaj vrednost src atributa elementa "avatar" na stranici na kojoj kreiramo profil
+      String avatarSourceOnCreateProfilePage = createProfilePage.avatar.getAttribute("src");
+      scroll(createProfilePage.createProfileButton); //skroluj do "Create profile" dugmeta
+      createProfilePage.clickOnCreateProfileButton(); //klikni na "Create profile" dugme
+      Thread.sleep(2000); //sacekaj 2 sekunde
+      //proveri da li je prikazano "Choose profile" dugme
+      Assert.assertTrue(deleteProfilePage.chooseProfileButton.isDisplayed());
+      String expectedURL = deleteProfilePageURL; //procitaj iz excel fajla URL na koji treba da budemo preusmereni
+      String actualURL = driver.getCurrentUrl(); //procitaj na kojem URL se zaista nalazimo
+      Assert.assertEquals(expectedURL, actualURL); //uporedi da li su URL identicni
+      //procitaj vrednost src atributa elementa "avatar" na stranici na kojoj mozemo da obrisemo vec kreiran profil
+      String avatarSourceOnDeletePage = deleteProfilePage.deletePageAvatar.getAttribute("src");
+      //procitaj tekstualnu vrednost elementa "deletePageName"
+      String profileNameValueOnDeletePage = deleteProfilePage.deletePageName.getText();
+      //uporedi da li je na stranici na kojoj je prikazan kreiran profil avatar identican
+      //kao onaj koji koji smo izabrali prilikom kreiranja stranice
+      Assert.assertEquals(avatarSourceOnCreateProfilePage, avatarSourceOnDeletePage);
+      //uporedi da li je na stranici na kojoj je prikazan kreiran profil ime isto
+      // kao ono ime koje smo uneli prilikom kreiranja profila
+      Assert.assertEquals(profileNameValue, profileNameValueOnDeletePage);
+      scroll(deleteProfilePage.deleteButton); //skroluj do "Delete profile" dugmeta
+      //proveri da li je na stranici prikazano "Delete profile" dugme
+      //To nam govori da smo kreirali profil jer ne treba da imamo opciju da obrisemo nesto sto ne postoji
+      Assert.assertTrue(deleteProfilePage.deleteButton.isDisplayed());
 
+    }
 
+   @Test (priority = 40)
+    public void verifyThatUserCanSuccessfullyDeleteCreatedProfile() throws InterruptedException {
+       deleteProfilePage.clickOnChooseProfileButton();
+       waiterClickability(chooseProfilePage.profileButton);
+       String profileButtonText = chooseProfilePage.profileButton.getText();
+       System.out.println("profile button text: " + profileButtonText);
+       Assert.assertTrue(chooseProfilePage.profileButton.isDisplayed());
+       chooseProfilePage.clickOnProfileButton();
+       waiterClickability(deleteProfilePage.deleteButton);
+       scroll(deleteProfilePage.deleteButton);
+       deleteProfilePage.clickOnDeleteProfileButton();
+       Thread.sleep(5000);
+       String expectedURL = chooseProfilePageURL;
+       String actualURL = driver.getCurrentUrl();
+       System.out.println(actualURL);
+       Assert.assertEquals(expectedURL, actualURL);
 
 
     }

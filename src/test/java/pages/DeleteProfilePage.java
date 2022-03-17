@@ -17,6 +17,19 @@ public class DeleteProfilePage extends BasePage {
     public @FindBy (xpath = "/html/body/div/div/div/div/div/div[2]/div/div/img")
     WebElement deletePageAvatar;
 
-    public @FindBy (css = "card__delete button.button--delete.button--small")
+    public @FindBy (xpath = "/html/body/div/div/div/div/div/div[2]/button[1]")
     WebElement deleteButton;
+
+    public @FindBy (xpath = "//*[@id=\"app\"]/div/div/header/div/button[2]")
+    WebElement chooseProfileButton;
+
+    //------------------------------------------------------------------------
+
+    public void clickOnDeleteProfileButton () {
+        deleteButton.click();
+    }
+
+    public void clickOnChooseProfileButton () {
+        chooseProfileButton.click();
+    }
 }

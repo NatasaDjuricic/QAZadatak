@@ -25,12 +25,12 @@ public class BasePage {
     public ExcelReader excelReader; //deklarisem ExcelReader
     public LoginPage loginPage; //napravila sam LoginPage i dodajem je ovde kako bi povukla ovde napravljena setovanja
     public String homeURL; //deklarisem URL pocetne stranice
-    public ChooseProfilePage chooseProfilePage; //dodajem pocetnu stranicu za testiranje
-    public String chooseProfilePageURL;
-    public CreateProfilePage createProfilePage;
-    public String createProfilePageURL;
-    public DeleteProfilePage deleteProfilePage;
-    public String deleteProfilePageURL;
+    public ChooseProfilePage chooseProfilePage; //dodajem stranicu za izbor profila
+    public String chooseProfilePageURL;//deklarisem URL stranice za izbor profila
+    public CreateProfilePage createProfilePage;//dodajem stranicu na kojoj pravim profil
+    public String createProfilePageURL;//deklarisem URL stranice na kojoj pravim profil
+    public DeleteProfilePage deleteProfilePage;//dodajem stranicu na kojoj mogu da obrisem profil
+    public String deleteProfilePageURL;//deklarisem URL stranice na kojoj mogu da obrisem profil
 
 
     //U ovoj klasi pravim @BeforClass koji ce se pokrenuti pre TestPage-a
@@ -54,34 +54,33 @@ public class BasePage {
 
 
     }
-
+        //pravim metodu koja ce sacekati dok element koji prosledim metodi ne bude vidljiv
         public void waiterVisibility(WebElement element) {
         wdwait.until(ExpectedConditions.visibilityOf(element));
 
         }
-
+        //pravim metodu koja ce sacekati dok element koji prosledim metodi ne bude klikabilan
         public void waiterClickability(WebElement element) {
         wdwait.until(ExpectedConditions.elementToBeClickable(element));
 
         }
 
+        //pravim metodu koja ceka da se ucita element koji prosledim metodi
         public void waiterPresenceOfElement (WebElement element) {
         wdwait.until(ExpectedConditions.visibilityOfAllElements(element));
         }
 
-
-
-
-
+        //pravim metodu koja koja ce da skroluje do elementa koji prosledim metodi
         public void scroll(WebElement element) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);" , element);
         }
 
+        //AfterClass se pokrece jednom nakon izvrsenih testova
         /*@AfterClass
         public void tearDown() {
-        driver.manage().deleteAllCookies();
-        driver.close();
-        driver.quit();
+        driver.manage().deleteAllCookies(); //brisem sve kolacice
+        driver.close(); //zatvaram prozor na kojem se trenutno nalzim
+        driver.quit(); //zatvaram sve prozore koji su otvoreni
         }*/
 
 
