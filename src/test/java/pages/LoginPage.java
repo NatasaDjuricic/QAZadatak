@@ -12,29 +12,35 @@ public class LoginPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    //"Username" polje
     public @FindBy (id = "username")
     WebElement username;
 
+    //"Password" polje
     public @FindBy (id = "password")
     WebElement password;
 
+    //"LOGIN" dugme
     public @FindBy (css = ".button.button--primary")
     WebElement loginButton;
 
 
     //-------------------------------------------------
 
+    //unesi korisnicko ime
     public void inputUsername (String uname) {
-        username.clear();
+        username.clear(); //prvo obrisi ako vec ima neki unos u polju
         username.sendKeys(uname);
     }
 
+    //unesi lozinku
     public void inputPassword (String pass) {
         password.clear();
         password.sendKeys(pass);
 
     }
 
+    //klikni na "LOGIN" dugme
     public  void clickOnLoginButton (){
         loginButton.click();
     }

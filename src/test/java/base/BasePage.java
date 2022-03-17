@@ -76,12 +76,12 @@ public class BasePage {
         }
 
         //AfterClass se pokrece jednom nakon izvrsenih testova
-        /*@AfterClass
+        @AfterClass
         public void tearDown() {
         driver.manage().deleteAllCookies(); //brisem sve kolacice
         driver.close(); //zatvaram prozor na kojem se trenutno nalzim
         driver.quit(); //zatvaram sve prozore koji su otvoreni
-        }*/
+        }
 
 
 }

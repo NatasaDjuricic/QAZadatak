@@ -69,13 +69,13 @@ public class TestPage extends BasePage {
       createProfilePage.inputBirthYear(validBirthYear);
       //procitaj vrednost koja se nalazi u polju "Enter your birth year"
       String birthYearValue = createProfilePage.birthYear.getAttribute("value");
-      Thread.sleep(5000); //Sacekaj 5 sekundi
+      Thread.sleep(2000); //Sacekaj 5 sekundi.
       createProfilePage.clickOnAvatar(); //klikni na avatar
       //procitaj vrednost src atributa elementa "avatar" na stranici na kojoj kreiramo profil
       String avatarSourceOnCreateProfilePage = createProfilePage.avatar.getAttribute("src");
       scroll(createProfilePage.createProfileButton); //skroluj do "Create profile" dugmeta
       createProfilePage.clickOnCreateProfileButton(); //klikni na "Create profile" dugme
-      Thread.sleep(2000); //sacekaj 2 sekunde
+      Thread.sleep(2000); //sacekaj 2 sekunde.
       //proveri da li je prikazano "Choose profile" dugme
       Assert.assertTrue(deleteProfilePage.chooseProfileButton.isDisplayed());
       String expectedURL = deleteProfilePageURL; //procitaj iz excel fajla URL na koji treba da budemo preusmereni
@@ -98,22 +98,23 @@ public class TestPage extends BasePage {
 
     }
 
-   @Test (priority = 40)
+    //ovaj test ce se izvrsiti poslednji
+    @Test (priority = 40)
+    //Verifikuj da korisnik moze uspesno da obrise profil
     public void verifyThatUserCanSuccessfullyDeleteCreatedProfile() throws InterruptedException {
-       deleteProfilePage.clickOnChooseProfileButton();
+       deleteProfilePage.clickOnChooseProfileButton(); //klikni na "Choose profile" dugme
+       //sacekaj dok kreiran profil ne bude klikabilan
        waiterClickability(chooseProfilePage.profileButton);
-       String profileButtonText = chooseProfilePage.profileButton.getText();
-       System.out.println("profile button text: " + profileButtonText);
+       //proveri da li je prikazan kreirani profil
        Assert.assertTrue(chooseProfilePage.profileButton.isDisplayed());
-       chooseProfilePage.clickOnProfileButton();
-       waiterClickability(deleteProfilePage.deleteButton);
-       scroll(deleteProfilePage.deleteButton);
-       deleteProfilePage.clickOnDeleteProfileButton();
-       Thread.sleep(5000);
-       String expectedURL = chooseProfilePageURL;
-       String actualURL = driver.getCurrentUrl();
-       System.out.println(actualURL);
-       Assert.assertEquals(expectedURL, actualURL);
+       chooseProfilePage.clickOnProfileButton(); //klikni na profil koji je kreiran
+       waiterClickability(deleteProfilePage.deleteButton); //sacekaj dok "Delete Profile" dugme ne bude klikabilno
+       scroll(deleteProfilePage.deleteButton); //skroluj do "Delete profile" dugmeta
+       deleteProfilePage.clickOnDeleteProfileButton(); //klikni na "Delete profile" dugme
+       Thread.sleep(2000); //sacekaj 2 sekunde
+       String expectedURL = chooseProfilePageURL; //procitaj na kojoj URL treba da budemo
+       String actualURL = driver.getCurrentUrl(); //procitaj na kojoj smo zaista URL
+       Assert.assertEquals(expectedURL, actualURL); //uporedi da li su URL identicne
 
 
     }
