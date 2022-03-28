@@ -69,7 +69,7 @@ public class TestPage extends BasePage {
       createProfilePage.inputBirthYear(validBirthYear);
       //procitaj vrednost koja se nalazi u polju "Enter your birth year"
       String birthYearValue = createProfilePage.birthYear.getAttribute("value");
-      Thread.sleep(2000); //Sacekaj 5 sekundi.
+      Thread.sleep(2000); //Sacekaj 2 sekunde.
       createProfilePage.clickOnAvatar(); //klikni na avatar
       //procitaj vrednost src atributa elementa "avatar" na stranici na kojoj kreiramo profil
       String avatarSourceOnCreateProfilePage = createProfilePage.avatar.getAttribute("src");
